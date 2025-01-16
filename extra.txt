@@ -1,0 +1,17 @@
+app.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await URL.findOne({ shortId: id });
+        console.log(result);
+
+        if (result) {
+            return res.json({ redirectUrl: result.redirectUrl }); // Return the redirectUrl as a JSON response
+
+        } else {
+            return res.status(404).json({ error: "URL not found" });
+        }
+    } catch (err) {
+        return res.status(500).json({ error: "Internal server error" });
+    }
+
+});
